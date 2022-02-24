@@ -18,11 +18,16 @@ public class MBase {
                 lambda[i] = matrix[i][j];
             }
             // TODO: add all possible size of lambda
-            arrayOfColumns.add(new String[] { lambda[0], lambda[1] });
-            if (checkSingleton(new String[] { lambda[0], lambda[1] }).equals("ok")) {
-                arrayOfColumns.add(new String[] { lambda[0], lambda[1] });
-            } else if (checkSingleton(new String[] { lambda[0], lambda[1] }).equals("mhs")) {
-                output.add(new String[] { lambda[0], lambda[1] });
+            var lambdaArrayList = new ArrayList<String>();
+            for (var k=0; k < matrix.length; k++){
+                lambdaArrayList.add(lambda[k]);
+            }
+            var lambdaArray = lambdaArrayList.toArray(new String[lambdaArrayList.size()]);
+            arrayOfColumns.add(lambdaArray);
+            if (checkSingleton(lambdaArray).equals("ok")) {
+                arrayOfColumns.add(lambdaArray);
+            } else if (checkSingleton(lambdaArray).equals("mhs")) {
+                output.add(lambdaArray);
             }
 
         }
