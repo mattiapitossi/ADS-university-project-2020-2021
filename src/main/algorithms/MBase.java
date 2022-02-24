@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class MBase {
     public ArrayList<String[]> mbase(String[][] matrix) {
-        var queue = new ArrayList<String[]>(); // !never queried
+        // var queue = new ArrayList<String[]>(); // !never queried
         var output = new ArrayList<String[]>();
         var arrayOfColumns = new ArrayList<String[]>();
         var lambda = new String[matrix.length];
@@ -20,24 +20,22 @@ public class MBase {
             // TODO: add all possible size of lambda
             arrayOfColumns.add(new String[] { lambda[0], lambda[1] });
             if (checkSingleton(new String[] { lambda[0], lambda[1] }).equals("ok")) {
-                queue.add(new String[] { lambda[0], lambda[1] });
+                arrayOfColumns.add(new String[] { lambda[0], lambda[1] });
             } else if (checkSingleton(new String[] { lambda[0], lambda[1] }).equals("mhs")) {
                 output.add(new String[] { lambda[0], lambda[1] });
             }
 
         }
 
-        // come output di check considero solo "ok" e "mhs", potremmo usare un true
-        // false altrimenti
-
+        // al posto di definire la variabile queue, uso arrayOfColumns come coda.
         for (var i = 0; i < arrayOfColumns.size(); i++) {
             var vector = arrayOfColumns.get(i);
             for (var j = 1; j < arrayOfColumns.size() - 1; j++) {
                 var e = arrayOfColumns.get(j);
                 var sigma = calculateVectorUnion(vector, e);
                 if (checkUnion(sigma, vector, e).equals("ok")) {
-                    queue.add(sigma);
-                } else if (!checkUnion(sigma, vector, e).equals("mhs")) {
+                    arrayOfColumns.add(sigma);
+                } else if (checkUnion(sigma, vector, e).equals("mhs")) {
                     output.add(sigma);
                 }
             }
@@ -89,11 +87,11 @@ public class MBase {
                 && targetSet.contains(domain2) && (domain1!=null) && (domain2!=null))  {
             return "mhs";
         }
-        if (targetSet.contains("0") && (!targetSet.contains(domain1) //
-                || !targetSet.contains(domain2))) {
-            return "ko";
-        } else {
+        if (targetSet.contains("0") && (targetSet.contains(domain1) //
+                || targetSet.contains(domain2)) && (domain1!=null) && (domain2!=null)) {
             return "ok";
+        } else {
+            return "ko";
         }
     }
 
