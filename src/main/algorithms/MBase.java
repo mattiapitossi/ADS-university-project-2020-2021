@@ -17,19 +17,13 @@ public class MBase {
             for (var i = 0; i < matrix.length; i++) {
                 lambda[i] = matrix[i][j];
             }
-            // TODO: add all possible size of lambda
-            var lambdaArrayList = new ArrayList<String>();
-            for (var k=0; k < matrix.length; k++){
-                lambdaArrayList.add(lambda[k]);
-            }
-            var lambdaArray = lambdaArrayList.toArray(new String[lambdaArrayList.size()]);
-            arrayOfColumns.add(lambdaArray);
+            var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
+            var lambdaArray = lambdaArrayList.toArray(new String[0]);
             if (checkSingleton(lambdaArray).equals("ok")) {
                 arrayOfColumns.add(lambdaArray);
             } else if (checkSingleton(lambdaArray).equals("mhs")) {
                 output.add(lambdaArray);
             }
-
         }
 
         // al posto di definire la variabile queue, uso arrayOfColumns come coda.
@@ -74,7 +68,7 @@ public class MBase {
     }
 
     private String checkSingleton(String[] sigma) {
-        var targetSet = new HashSet<String>(Arrays.asList(sigma));
+        var targetSet = new HashSet<>(Arrays.asList(sigma));
         if (!targetSet.contains("0"))
             return "mhs";
             // check if contains all zeroes
@@ -85,7 +79,7 @@ public class MBase {
     }
 
     private String checkUnion(String[] sigma, String[] vector, String[] e) {
-        var targetSet = new HashSet<String>(Arrays.asList(sigma));
+        var targetSet = new HashSet<>(Arrays.asList(sigma));
         var domain1 = getColumnDomain(vector);
         var domain2 = getColumnDomain(e);
         if (!targetSet.contains("0") && targetSet.contains(domain1) //
