@@ -29,7 +29,7 @@ public class MBase {
         // al posto di definire la variabile queue, uso arrayOfColumns come coda.
         for (var i = 0; i < arrayOfColumns.size(); i++) {
             var vector = arrayOfColumns.get(i);
-            for (var j = 1; j < arrayOfColumns.size() - 1; j++) {
+            for (var j = 1; j < arrayOfColumns.size(); j++) {
                 var e = arrayOfColumns.get(j);
                 var sigma = calculateVectorUnion(vector, e);
                 if (checkUnion(sigma, vector, e).equals("ok")) {
