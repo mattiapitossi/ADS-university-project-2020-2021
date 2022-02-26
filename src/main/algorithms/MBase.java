@@ -1,43 +1,49 @@
 package algorithms;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
+
+import static java.lang.Integer.parseInt;
 
 public class MBase {
     public ArrayList<String[]> mbase(String[][] matrix) {
-        // var queue = new ArrayList<String[]>(); // !never queried
         var output = new ArrayList<String[]>();
-        var arrayOfColumns = new ArrayList<String[]>();
+        var queueSingoletti = new LinkedList<String[]>();
         var lambda = new String[matrix.length];
+        var queue = new LinkedList<String[]>();
 
         // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
-        for (var j = 0; j < matrix[0].length - 1; j++) {
+        for (var j = 0; j < matrix[0].length; j++) {
             for (var i = 0; i < matrix.length; i++) {
                 lambda[i] = matrix[i][j];
             }
             var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
             var lambdaArray = lambdaArrayList.toArray(new String[0]);
             if (checkSingleton(lambdaArray).equals("ok")) {
-                arrayOfColumns.add(lambdaArray);
+                //ok ma non ultimo aggiunge alla coda
+                if (j != matrix[0].length - 1) {
+                    queue.add(lambdaArray);
+                }
             } else if (checkSingleton(lambdaArray).equals("mhs")) {
                 output.add(lambdaArray);
             }
+            queueSingoletti.add(lambdaArray);
+
         }
 
-        // al posto di definire la variabile queue, uso arrayOfColumns come coda.
-        for (var i = 0; i < arrayOfColumns.size(); i++) {
-            var vector = arrayOfColumns.get(i);
-            for (var j = 1; j < arrayOfColumns.size(); j++) {
-                var e = arrayOfColumns.get(j);
+        while (queue.peek() != null) {
+            var vector = queue.peek();
+            var max = getMaxVectorProjection(vector);
+            for (var j = max + 1; j < queueSingoletti.size(); j++) {
+                var e = queueSingoletti.get(j);
                 var sigma = calculateVectorUnion(vector, e);
-                if (checkUnion(sigma, vector, e).equals("ok")) {
-                    arrayOfColumns.add(sigma);
+                var maxSigma = getMaxVectorProjection(sigma);
+                if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
+                    queue.add(sigma);
                 } else if (checkUnion(sigma, vector, e).equals("mhs")) {
                     output.add(sigma);
                 }
             }
+            queue.poll();
         }
 
         return output;
@@ -80,28 +86,47 @@ public class MBase {
 
     private String checkUnion(String[] sigma, String[] vector, String[] e) {
         var targetSet = new HashSet<>(Arrays.asList(sigma));
-        var domain1 = getColumnDomain(vector);
-        var domain2 = getColumnDomain(e);
-        if (!targetSet.contains("0") && targetSet.contains(domain1) //
-                && targetSet.contains(domain2) && (domain1!=null) && (domain2!=null))  {
+        var domain = getColumnDomain(vector, e);
+        if (!domain.contains(null) && !targetSet.contains("0") && targetSet.containsAll(domain)) {
             return "mhs";
         }
-        if (targetSet.contains("0") && (targetSet.contains(domain1) //
-                || targetSet.contains(domain2)) && (domain1!=null) && (domain2!=null)) {
+        if (!domain.contains(null) && targetSet.contains("0") && targetSet.containsAll(domain)) {
             return "ok";
         } else {
             return "ko";
         }
     }
 
-    private String getColumnDomain(String[] vector) {
-        for (String s : vector) {
-            if (!s.equals("0")) {
-                return s;
+    private ArrayList<String> getColumnDomain(String[] vector, String[] e) {
+        var res = new ArrayList<String>();
+        if (Arrays.stream(e).allMatch("0"::equals)) {
+            res.add(null);
+        } else {
+            for (String s : vector) {
+                if (!s.equals("0") && !s.equals("x") && !res.contains(s)) {
+                    res.add(s);
+                }
+            }
+            for (String s : e) {
+                if (!s.equals("0") && !s.equals("x") && !res.contains(s)) {
+                    res.add(s);
+                }
             }
         }
-        // should never reach this
-        return null;
+        return res;
+    }
+
+    private int getMaxVectorProjection(String[] vector) {
+        var max = 0;
+        for (String v : vector) {
+            if (!v.equals("0") && !v.equals("x")) {
+                var digit = Integer.parseInt(v.replace("c", ""));
+                if (digit > max) {
+                    max = digit;
+                }
+            }
+        }
+        return max;
     }
 
 }
