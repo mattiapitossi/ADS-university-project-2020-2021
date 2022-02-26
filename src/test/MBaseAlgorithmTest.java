@@ -40,8 +40,8 @@ public class MBaseAlgorithmTest {
         var mhs1 = new String[]{"c1", "x", "c1", "c5", "x", "x", "c3"};
         var mhs2 = new String[]{"x", "x", "c1", "c0", "x", "x", "c3"};
         myArrayList.add(mhs0);
-        myArrayList.add(mhs1);
         myArrayList.add(mhs2);
+        myArrayList.add(mhs1);
 
         assertArrayEquals(myArrayList.toArray(), output.toArray());
     }
