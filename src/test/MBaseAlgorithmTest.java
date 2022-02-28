@@ -19,7 +19,6 @@ public class MBaseAlgorithmTest {
     }
 
     @Test
-    @Disabled
     void testMBaseAlgorithm() throws Exception {
         var mbase = new MBase();
         String[][] arr = {
@@ -59,8 +58,10 @@ public class MBaseAlgorithmTest {
 
         var mhs0 = new String[]{"c3", "c3"};
         var mhs1 = new String[]{"c2", "c1"};
+        var mhs2 = new String[]{"c2", "c5"};
         myArrayList.add(mhs0);
         myArrayList.add(mhs1);
+        myArrayList.add(mhs2);
 
         assertArrayEquals(myArrayList.toArray(), output.toArray());
     }
@@ -80,8 +81,10 @@ public class MBaseAlgorithmTest {
 
         var mhs0 = new String[]{"c2", "c2", "c2"};
         var mhs1 = new String[]{"c1", "x", "c0"};
+        var mhs2 = new String[]{"c1", "x", "c3"};
         myArrayList.add(mhs0);
         myArrayList.add(mhs1);
+        myArrayList.add(mhs2);
 
         assertArrayEquals(myArrayList.toArray(), output.toArray());
     }
