@@ -1,5 +1,4 @@
 import algorithms.MBase;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -8,15 +7,6 @@ import java.util.ArrayList;
 
 
 public class MBaseAlgorithmTest {
-
-    @Test
-    void testBaseAlgorithm() throws Exception {
-        var mbase = new MBase();
-        String[][] arr = {{"c1", "0", "c2"}, {"c1", "0", "0"}};
-
-        var res = mbase.mbase(arr);
-        res.forEach(c -> System.out.println(c[0]));
-    }
 
     @Test
     void testMBaseAlgorithm() throws Exception {
