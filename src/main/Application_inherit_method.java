@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Application_inherit_method {
     public static void main(String[] args) {
 
-        var lambda = new String[] { "c0", "c2" };
-        var gamma = new String[] { "c0", "c2", "c11" };
+        var lambda = new String[]{"c0", "c2"};
+        var gamma = new String[]{"c0", "c2", "c11"};
 
         var listaTabuLambda = new ArrayList<ArrayList<String>>();
 
@@ -18,12 +17,10 @@ public class Application_inherit_method {
 
         var maxGamma = gamma.length - 1;
 
-        var copyListaTabuLambda = new ArrayList<ArrayList<String>>();
-        copyListaTabuLambda.addAll(listaTabuLambda);
+        var copyListaTabuLambda = new ArrayList<>(listaTabuLambda);
 
         List<ArrayList<String>> listaTabuGamma = copyListaTabuLambda.stream() //
-                .filter(s -> compareStrings(s.get(0), gamma[maxGamma])) //
-                .collect(Collectors.toList());
+                .filter(s -> compareStrings(s.get(0), gamma[maxGamma])).toList();
 
         listaTabuGamma.stream().forEach(s -> {
             if (s.get(0).equals(gamma[maxGamma])) {
@@ -31,12 +28,10 @@ public class Application_inherit_method {
             }
         });
 
-        for (var i = 0; i < listaTabuGamma.size(); i++) {
-            var elementoListaTabuGamma = listaTabuGamma.get(i);
-            for (var j = 0; j < elementoListaTabuGamma.size(); j++) {
-                System.out.printf("%s ", elementoListaTabuGamma.get(j));
+        for (var elementoListaTabuGamma : listaTabuGamma) {
+            for (var s : elementoListaTabuGamma) {
+                System.out.printf("%s ", s);
             }
-
             System.out.println("\n");
         }
     }
@@ -44,11 +39,7 @@ public class Application_inherit_method {
     public static boolean compareStrings(String s, String gamma) {
         s = s.replaceAll("[^\\d.]", "");
         gamma = gamma.replaceAll("[^\\d.]", "");
-        if (Integer.parseInt(s) >= Integer.parseInt(gamma)) {
-            return true;
-        } else
-            return false;
-
+        return Integer.parseInt(s) >= Integer.parseInt(gamma);
     }
 
 }
