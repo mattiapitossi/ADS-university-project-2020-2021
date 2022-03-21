@@ -2,8 +2,6 @@ package algorithms;
 
 import java.util.*;
 
-import static java.lang.Integer.parseInt;
-
 public class MBase {
     public ArrayList<String[]> mbase(String[][] matrix) {
         var output = new ArrayList<String[]>();
@@ -19,7 +17,7 @@ public class MBase {
             var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
             var lambdaArray = lambdaArrayList.toArray(new String[0]);
             if (checkSingleton(lambdaArray).equals("ok")) {
-                //ok ma non ultimo aggiunge alla coda
+                // ok ma non ultimo aggiunge alla coda
                 if (j != matrix[0].length - 1) {
                     queue.add(lambdaArray);
                 }
@@ -77,7 +75,7 @@ public class MBase {
         var targetSet = new HashSet<>(Arrays.asList(sigma));
         if (!targetSet.contains("0"))
             return "mhs";
-            // check if contains all zeroes
+        // check if contains all zeroes
         else if (targetSet.contains("0") && targetSet.size() <= 1)
             return "ko";
         else
