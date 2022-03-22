@@ -32,7 +32,9 @@ public class MVariant1 {
             } else if (checkSingleton(lambdaArrayList).equals("mhs")) {
                 output.add(lambdaArrayList);
                 for (var k = 0; k < queueDomains.size(); k++) {
-                    listaTabu.put(queueDomains.get(k), getColumnDomainSingleton(lambdaArrayList));
+                    ArrayList<ArrayList<String>> lista = listaTabu.get(queueDomains.get(k));
+                    lista.add(lambdaArrayList);
+                    listaTabu.put(queueDomains.get(k), lista);
                 }
             }
             queueSingoletti.add(lambdaArrayList);
@@ -43,14 +45,13 @@ public class MVariant1 {
             var max = getMaxVectorProjection(vector);
             for (var j = max + 1; j < queueSingoletti.size(); j++) {
                 var e = queueSingoletti.get(j);
-                var sigma = calculateVectorUnion(vector, e, listaTabu);
-                var maxSigma = getMaxVectorProjection(sigma);
-                if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
-                    queue.add(sigma);
-                    // qua sigma sarebbe come gamma nel metodo, è sbagliato il nome
-                    listaTabu.put(getColumnDomainSingleton(sigma), inheritTabu(vector, sigma, listaTabu));
-                } else if (checkUnion(sigma, vector, e).equals("mhs")) {
-                    output.add(sigma);
+                var gamma = calculateVectorUnion(vector, e, listaTabu);
+                var maxGamma = getMaxVectorProjection(gamma);
+                if (checkUnion(gamma, vector, e).equals("ok") && maxGamma != matrix[0].length - 1) {
+                    queue.add(gamma);
+                    listaTabu.put(getColumnDomainSingleton(gamma), inheritTabu(vector, gamma, listaTabu));
+                } else if (checkUnion(gamma, vector, e).equals("mhs")) {
+                    output.add(gamma);
                 }
             }
             queue.poll();
@@ -192,5 +193,7 @@ public class MVariant1 {
         gamma = gamma.replaceAll("[^\\d.]", "");
         return Integer.parseInt(s) >= Integer.parseInt(gamma);
     }
+
+
 
 }
