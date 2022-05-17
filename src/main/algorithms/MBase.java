@@ -12,6 +12,7 @@ public class MBase {
         var queue = new LinkedList<String[]>();
 
         // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
+        //add comment
         for (var j = 0; j < matrix[0].length; j++) {
             for (var i = 0; i < matrix.length; i++) {
                 lambda[i] = matrix[i][j];
