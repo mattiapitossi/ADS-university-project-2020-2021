@@ -1,5 +1,6 @@
 package algorithms;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class MBase {
@@ -28,6 +29,7 @@ public class MBase {
 
         }
 
+        var i=0;
         while (queue.peek() != null) {
             var vector = queue.peek();
             var max = getMaxVectorProjection(vector);
@@ -42,9 +44,10 @@ public class MBase {
                 }
             }
             queue.poll();
+            i++;
         }
 
-        return output;
+        return getMhsDomain(output, matrix);
 
     }
 
@@ -112,6 +115,24 @@ public class MBase {
             }
         }
         return res;
+    }
+
+    private ArrayList<String[]> getMhsDomain(ArrayList<String[]> output, String[][] matrix) {
+        var mhs = new ArrayList<String[]>();
+        var res = new String[matrix[0].length];
+
+        for(var i=0; i< output.size(); i++){
+            var mhsDomain = output.get(i);
+            for (String s : mhsDomain) {
+                if (s.startsWith("c")) {
+                    var digit = Integer.parseInt(s.replace("c", ""));
+                    res[digit] = s;
+                }
+            }
+            mhs.add(res);
+            res = new String[matrix[0].length];
+        }
+        return  mhs;
     }
 
     private int getMaxVectorProjection(String[] vector) {
