@@ -1,7 +1,8 @@
 package algorithms;
 
-import java.lang.reflect.Array;
 import java.util.*;
+
+import static java.lang.Integer.parseInt;
 
 public class MBase {
     public ArrayList<String[]> mbase(String[][] matrix) {
@@ -18,7 +19,7 @@ public class MBase {
             var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
             var lambdaArray = lambdaArrayList.toArray(new String[0]);
             if (checkSingleton(lambdaArray).equals("ok")) {
-                // ok ma non ultimo aggiunge alla coda
+                //ok ma non ultimo aggiunge alla coda
                 if (j != matrix[0].length - 1) {
                     queue.add(lambdaArray);
                 }
@@ -29,7 +30,6 @@ public class MBase {
 
         }
 
-        var i=0;
         while (queue.peek() != null) {
             var vector = queue.peek();
             var max = getMaxVectorProjection(vector);
@@ -44,10 +44,9 @@ public class MBase {
                 }
             }
             queue.poll();
-            i++;
         }
 
-        return getMhsDomain(output, matrix);
+        return output;
 
     }
 
@@ -78,7 +77,7 @@ public class MBase {
         var targetSet = new HashSet<>(Arrays.asList(sigma));
         if (!targetSet.contains("0"))
             return "mhs";
-        // check if contains all zeroes
+            // check if contains all zeroes
         else if (targetSet.contains("0") && targetSet.size() <= 1)
             return "ko";
         else
@@ -115,24 +114,6 @@ public class MBase {
             }
         }
         return res;
-    }
-
-    private ArrayList<String[]> getMhsDomain(ArrayList<String[]> output, String[][] matrix) {
-        var mhs = new ArrayList<String[]>();
-        var res = new String[matrix[0].length];
-
-        for(var i=0; i< output.size(); i++){
-            var mhsDomain = output.get(i);
-            for (String s : mhsDomain) {
-                if (s.startsWith("c")) {
-                    var digit = Integer.parseInt(s.replace("c", ""));
-                    res[digit] = s;
-                }
-            }
-            mhs.add(res);
-            res = new String[matrix[0].length];
-        }
-        return  mhs;
     }
 
     private int getMaxVectorProjection(String[] vector) {
