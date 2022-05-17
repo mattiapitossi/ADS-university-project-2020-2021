@@ -1,15 +1,16 @@
-import algorithms.MBase;
+import algorithms.MBaseRefactorprova1;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MBaseAlgorithmTest {
-
+public class MBaseAlgorithmTestRefactor {
     @Test
-    void testMBaseAlgorithm() throws Exception {
-        var mbase = new MBase();
+    void testMVariant1Algorithm() throws Exception {
+        var mbase = new MBaseRefactorprova1();
         String[][] arr = {
                 { "c0", "c1", "c2", "0", "0", "0" },
                 { "0", "c1", "c2", "c3", "0", "c5" },
@@ -20,13 +21,13 @@ public class MBaseAlgorithmTest {
                 { "0", "0", "c2", "c3", "0", "0" }
         };
 
-        var output = mbase.mbase(arr);
+        var output = mbase.mBaseRefactorprova1(arr);
 
-        var myArrayList = new ArrayList<String[]>();
+        var myArrayList = new ArrayList<ArrayList<String>>();
 
-        var mhs0 = new String[] { null, null, "c2", null, null, null};
-        var mhs1 = new String[] { null, "c1", null, "c3", null, "c5"};
-        var mhs2 = new String[] { "c0", "c1", null, "c3", null, null};
+        var mhs0 = new ArrayList<String>(List.of("c2", "c2", "c2", "c2", "c2", "c2", "c2"));
+        var mhs1 = new ArrayList<String>(List.of("c1", "x", "c1", "c5", "x", "x", "c3"));
+        var mhs2 = new ArrayList<String>(List.of("x", "x", "c1", "c0", "x", "x", "c3"));
         myArrayList.add(mhs0);
         myArrayList.add(mhs2);
         myArrayList.add(mhs1);
@@ -36,18 +37,18 @@ public class MBaseAlgorithmTest {
 
     @Test
     void testMBaseAlgorithmMat1() throws Exception {
-        var mbase = new MBase();
+        var mbase = new MBaseRefactorprova1();
         String[][] arr = { { "0", "0", "c2", "c3", "0", "0" },
                 { "0", "c1", "0", "c3", "0", "c5" }
         };
 
-        var output = mbase.mbase(arr);
+        var output = mbase.mBaseRefactorprova1(arr);
 
-        var myArrayList = new ArrayList<String[]>();
+        var myArrayList = new ArrayList<ArrayList<String>>();
 
-        var mhs0 = new String[] { "c3", "c3" };
-        var mhs1 = new String[] { "c2", "c1" };
-        var mhs2 = new String[] { "c2", "c5" };
+        var mhs0 = new ArrayList<String>(List.of("c3", "c3"));
+        var mhs1 = new ArrayList<String>(List.of("c2", "c1"));
+        var mhs2 = new ArrayList<String>(List.of("c2", "c5"));
         myArrayList.add(mhs0);
         myArrayList.add(mhs1);
         myArrayList.add(mhs2);
@@ -57,20 +58,20 @@ public class MBaseAlgorithmTest {
 
     @Test
     void testMBaseAlgorithmMat2() throws Exception {
-        var mbase = new MBase();
+        var mbase = new MBaseRefactorprova1();
         String[][] arr = {
                 { "0", "c1", "c2", "0" },
                 { "c0", "c1", "c2", "c3" },
                 { "c0", "0", "c2", "c3" }
         };
 
-        var output = mbase.mbase(arr);
+        var output = mbase.mBaseRefactorprova1(arr);
 
-        var myArrayList = new ArrayList<String[]>();
+        var myArrayList = new ArrayList<ArrayList<String>>();
 
-        var mhs0 = new String[] { "c2", "c2", "c2" };
-        var mhs1 = new String[] { "c1", "x", "c0" };
-        var mhs2 = new String[] { "c1", "x", "c3" };
+        var mhs0 = new ArrayList<String>(List.of("c2", "c2", "c2"));
+        var mhs1 = new ArrayList<String>(List.of("c1", "x", "c0"));
+        var mhs2 = new ArrayList<String>(List.of("c1", "x", "c3"));
         myArrayList.add(mhs0);
         myArrayList.add(mhs1);
         myArrayList.add(mhs2);
