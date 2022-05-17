@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class Application {
     public static void main(String[] args) throws FileNotFoundException {
 
-        var line = "C:\\Users\\mmich\\Desktop\\VS_workspace\\Algoritmi-2020-2021\\src\\main\\resources\\74L85.000.matrix";
+        var line = "/Users/michelafarruggia/IdeaProjects/Algoritmi-2020-2021/src/main/resources/74L85.000.matrix";
 
         var mbase = new MBase();
         // var mvariant1 = new MVariant1();
@@ -37,15 +37,5 @@ public class Application {
         System.out.printf("Numero MHS trovati %d: \n", res.size());
         res.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
 
-        /*
-         * System.out.println("------ MVariant1 ------");
-         * System.out.
-         * printf("I tempi di esecuzione dell'algoritmo MVariant1 per questa istanza sono: %d millisecondi \n"
-         * ,
-         * (end1 - start1));
-         * System.out.printf("La memoria usata è: %d KB \n", memoryUsed1 / 1024);
-         * System.out.printf("Numero MHS trovati %d: \n", res1.size());
-         * res1.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
-         */
     }
 }

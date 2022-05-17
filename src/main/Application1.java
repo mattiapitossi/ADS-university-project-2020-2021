@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 public class Application1 {
     public static void main(String[] args) throws FileNotFoundException {
 
-        var line = "C:\\Users\\mmich\\Desktop\\VS_workspace\\Algoritmi-2020-2021\\src\\main\\resources\\74L85.000.matrix";
+        var line = "/Users/michelafarruggia/IdeaProjects/Algoritmi-2020-2021/src/main/resources/74L85.000.matrix";
 
         var mbaseRefactor = new MBaseRefactorprova1();
         var matrix = MatrixParser.parse(line);
