@@ -15,14 +15,13 @@ public class MatrixPreElaboration {
         return res;
     }
 
-    //implement remove rows
     public List<List<String>> removeRows(List<List<String>> array) {
         var found = new ArrayList<List<String>>();
         for (var i = 0; i < array.size() - 1; i++) {
             for (var j = i + 1; j < array.size(); j++) {
-                if (array.get(i).containsAll(array.get(j).stream().filter(c -> !c.equals("0")).toList())) {
+                if (array.get(i).containsAll(array.get(j).stream().filter(c -> !c.equals("0")).toList()) && !found.contains(array.get(i))) {
                     found.add(array.get(i));
-                } else if (array.get(j).containsAll(array.get(i).stream().filter(c -> !c.equals("0")).toList())) {
+                } else if (array.get(j).containsAll(array.get(i).stream().filter(c -> !c.equals("0")).toList()) && !found.contains(array.get(j))) {
                     found.add(array.get(j));
                 }
             }
@@ -32,27 +31,31 @@ public class MatrixPreElaboration {
     }
 
     //implement remove columns
-
-    //implement convert from list to 2D array
-
-    /*
-    public List<String> removeRows(List<String> ctx) {
-        var list = new ArrayList<ArrayList<String>>();
-        ctx.forEach(element -> {
-            var toInsert = new ArrayList<String>();
-            for (char c : element.toCharArray()) {
-                toInsert.add(String.valueOf(c));
+    public List<List<String>> removeColumns(List<List<String>> array) {
+        //for each column
+        var indexToRemove = new ArrayList<Integer>();
+        var found = false;
+        for (var i = 0; i < array.get(0).size(); i++) {
+            //for each row of the column
+            for (List<String> strings : array) {
+                if (!strings.get(i).equals("0")) {
+                    found = true;
+                    break;
+                }
             }
-            list.add(toInsert);
-            toInsert.clear();
-        });
-        var listOfString = new ArrayList<String>();
-        list.forEach(c -> {
-            listOfString.add(String.join("", c));
-        });
-        listOfString.forEach(System.out::println);
-        return listOfString;
+            if (!found) {
+                indexToRemove.add(i);
+            }
+        }
+        array.forEach(idx -> idx.removeAll(
+                indexToRemove.stream()
+                        .filter(i -> i < idx.size())
+                        .map(idx::get)
+                        .toList())
+        );
+        return array;
     }
-    */
+    
+    //implement convert from list to 2D array
 
 }
