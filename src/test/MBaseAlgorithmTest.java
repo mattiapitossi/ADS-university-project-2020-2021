@@ -3,7 +3,6 @@ import org.junit.jupiter.api.Test;
 import utils.MatrixPreElaboration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -39,15 +38,22 @@ public class MBaseAlgorithmTest {
 
     @Test
     void testMBaseAlgorithmPre() throws Exception {
-        var mbase = new MatrixPreElaboration();
-        var row1 = Arrays.asList("c0","c1","c2");
-        var row2 = Arrays.asList("0","c1","c2");
+        var preElaboration = new MatrixPreElaboration();
+        var row1 = new ArrayList<String>();
+        row1.add("0");
+        row1.add("c1");
+        row1.add("c2");
+        var row2 = new ArrayList<String>();
+        row2.add("0");
+        row2.add("c1");
+        row2.add("c2");
+
         var matrix = new ArrayList<List<String>>();
         matrix.add(row1);
         matrix.add(row2);
 
         //we should be careful to not input an immutable list
-        var res = mbase.removeRows(matrix);
+        var res = preElaboration.removeColumns(preElaboration.removeRows(matrix));
     }
 
     @Test
