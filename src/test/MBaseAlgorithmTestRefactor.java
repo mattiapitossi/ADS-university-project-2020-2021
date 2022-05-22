@@ -38,7 +38,8 @@ public class MBaseAlgorithmTestRefactor {
     @Test
     void testMBaseAlgorithmMat1() throws Exception {
         var mbase = new MBaseRefactorprova1();
-        String[][] arr = { { "0", "0", "c2", "c3", "0", "0" },
+        String[][] arr = {
+                { "0", "0", "c2", "c3", "0", "0" },
                 { "0", "c1", "0", "c3", "0", "c5" }
         };
 
