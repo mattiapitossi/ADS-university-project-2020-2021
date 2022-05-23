@@ -39,21 +39,31 @@ public class MBaseAlgorithmTest {
     @Test
     void testMBaseAlgorithmPre() throws Exception {
         var preElaboration = new MatrixPreElaboration();
+        var mbase = new MBase();
         var row1 = new ArrayList<String>();
-        row1.add("0");
-        row1.add("c1");
-        row1.add("c2");
+        row1.add("0");row1.add("0");row1.add("c2");row1.add("c3");row1.add("0");row1.add("0");
         var row2 = new ArrayList<String>();
-        row2.add("0");
-        row2.add("c1");
-        row2.add("c2");
+        row2.add("0");row2.add("c1");row2.add("0");row2.add("c3");row2.add("0");row2.add("c5");
 
         var matrix = new ArrayList<List<String>>();
         matrix.add(row1);
         matrix.add(row2);
 
         //we should be careful to not input an immutable list
-        var res = preElaboration.removeColumns(preElaboration.removeRows(matrix));
+        var res = preElaboration.convertFromListToArray(preElaboration.removeColumns(preElaboration.removeRows(matrix)));
+
+        var output = mbase.mbase(res);
+
+        var myArrayList = new ArrayList<String[]>();
+
+        var mhs0 = new String[]{"c3", "c3"};
+        var mhs1 = new String[]{"c2", "c1"};
+        var mhs2 = new String[]{"c2", "c5"};
+        myArrayList.add(mhs0);
+        myArrayList.add(mhs1);
+        myArrayList.add(mhs2);
+
+        assertArrayEquals(myArrayList.toArray(), output.toArray());
     }
 
     @Test
