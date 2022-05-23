@@ -2,6 +2,7 @@ package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MatrixPreElaboration {
@@ -46,16 +47,16 @@ public class MatrixPreElaboration {
             if (!found) {
                 indexToRemove.add(i);
             }
+            found = false;
         }
-        array.forEach(idx -> idx.removeAll(
-                indexToRemove.stream()
-                        .filter(i -> i < idx.size())
-                        .map(idx::get)
-                        .toList())
-        );
+        Collections.reverse(indexToRemove);
+        array.forEach(row -> indexToRemove.forEach(idx -> row.remove(idx.intValue())));
         return array;
     }
-    
+
     //implement convert from list to 2D array
+    public String[][] convertFromListToArray(List<List<String>> array) {
+        return array.stream().map(l -> l.toArray(String[]::new)).toArray(String[][]::new);
+    }
 
 }
