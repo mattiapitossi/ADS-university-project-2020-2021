@@ -15,7 +15,7 @@ public class Application1 {
         // Risultati con algoritmo MBaseRefactor
         var runtime1 = Runtime.getRuntime();
         var start1 = System.currentTimeMillis();
-        var res1 = mbaseRefactor.mBaseRefactorprova1(matrix);
+        var res1 = mbaseRefactor.mBaseRefactorprova1(matrix.stream().map(row -> row.toArray(String[]::new)).toArray(String[][]::new));
         var end1 = System.currentTimeMillis();
         var memoryUsed1 = runtime1.totalMemory() - runtime1.freeMemory();
 
