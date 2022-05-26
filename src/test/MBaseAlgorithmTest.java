@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 public class MBaseAlgorithmTest {
 
     @Test
-    void testMBaseAlgorithm() throws Exception {
+    void testMBaseAlgorithm() {
         var mbase = new MBase();
         String[][] arr = {
                 {"c0", "c1", "c2", "0", "0", "0"},
@@ -37,7 +37,7 @@ public class MBaseAlgorithmTest {
     }
 
     @Test
-    void testMBaseAlgorithmPre() throws Exception {
+    void testMBaseAlgorithmPre() {
         var preElaboration = new MatrixPreElaboration();
         var mbase = new MBase();
         var row1 = new ArrayList<String>();
@@ -67,7 +67,7 @@ public class MBaseAlgorithmTest {
     }
 
     @Test
-    void testMBaseAlgorithmMat1() throws Exception {
+    void testMBaseAlgorithmMat1() {
         var mbase = new MBase();
         String[][] arr = {
                 {"0", "0", "c2", "c3", "0", "0"},
@@ -89,7 +89,7 @@ public class MBaseAlgorithmTest {
     }
 
     @Test
-    void testMBaseAlgorithmMat2() throws Exception {
+    void testMBaseAlgorithmMat2() {
         var mbase = new MBase();
         String[][] arr = {
                 {"0", "c1", "c2", "0"},
