@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public final class MatrixParser {
@@ -13,7 +14,7 @@ public final class MatrixParser {
     private MatrixParser() {
     }
 
-    public static String[][] parse(String path) throws FileNotFoundException {
+    public static List<List<String>> parse(String path) throws FileNotFoundException {
         var sc = new Scanner(new BufferedReader(new FileReader(path)));
         var rowsCtx = new ArrayList<String>();
         var m = 0;
@@ -33,7 +34,7 @@ public final class MatrixParser {
         return processMatrix(rowsCtx, m);
     }
 
-    private static String[][] processMatrix(ArrayList<String> ctx, int columns) {
+    private static List<List<String>> processMatrix(ArrayList<String> ctx, int columns) {
         String[][] array = new String[ctx.size()][columns];
         for (var i = 0; i < array.length; i++) {
             array[i] = ctx.get(i).split("\\s+");
@@ -41,11 +42,20 @@ public final class MatrixParser {
         for (var i = 0; i < array.length; i++) {
             for (var j = 0; j < array[0].length; j++) {
                 if (array[i][j].equals("1")) {
-                    array[i][j] = "c" + String.valueOf(j);
+                    array[i][j] = "c" + j;
                 }
             }
         }
-        return array;
+        var list = new ArrayList<List<String>>();
+
+        for (var i = 0; i < array.length; i++) {
+            list.add(new ArrayList<>());
+            for (var j = 0; j < array[0].length; j++) {
+                list.get(i).add(array[i][j]);
+            }
+        }
+
+        return list;
     }
 
 }
