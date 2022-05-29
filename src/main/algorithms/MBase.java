@@ -1,6 +1,5 @@
 package algorithms;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class MBase {
@@ -27,7 +26,6 @@ public class MBase {
                 output.add(lambdaArray);
             }
             queueSingoletti.add(lambdaArray);
-
         }
 
         while (queue.peek() != null) {
@@ -46,7 +44,7 @@ public class MBase {
             queue.poll();
         }
 
-        return getMhsDomain(output, matrix);
+        return getMhsDomain(output);
 
     }
 
@@ -77,7 +75,7 @@ public class MBase {
         var targetSet = new HashSet<>(Arrays.asList(sigma));
         if (!targetSet.contains("0"))
             return "mhs";
-        // check if contains all zeroes
+            // check if contains all zeroes
         else if (targetSet.contains("0") && targetSet.size() <= 1)
             return "ko";
         else
@@ -116,10 +114,10 @@ public class MBase {
         return res;
     }
 
-    private ArrayList<ArrayList<String>> getMhsDomain(ArrayList<String[]> output, String[][] matrix) {
+    private ArrayList<ArrayList<String>> getMhsDomain(ArrayList<String[]> output) {
         var mhs = new ArrayList<ArrayList<String>>();
 
-        for(var i=0; i< output.size(); i++){
+        for (var i = 0; i < output.size(); i++) {
             var mhsDomain = output.get(i);
             mhs.add(new ArrayList<>());
             for (String s : mhsDomain) {
@@ -128,7 +126,7 @@ public class MBase {
                 }
             }
         }
-        return  mhs;
+        return mhs;
     }
 
     private int getMaxVectorProjection(String[] vector) {
