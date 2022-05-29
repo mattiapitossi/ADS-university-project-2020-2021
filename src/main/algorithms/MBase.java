@@ -30,7 +30,6 @@ public class MBase {
 
         }
 
-        var i=0;
         while (queue.peek() != null) {
             var vector = queue.peek();
             var max = getMaxVectorProjection(vector);
@@ -45,7 +44,6 @@ public class MBase {
                 }
             }
             queue.poll();
-            i++;
         }
 
         return getMhsDomain(output, matrix);
