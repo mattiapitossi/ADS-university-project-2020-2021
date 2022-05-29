@@ -31,10 +31,10 @@ public final class MatrixParser {
         // DEBUG:
         // rowsCtx.stream().forEach(c -> System.out.println(c));
 
-        return processMatrix2(rowsCtx, m);
+        return processMatrix(rowsCtx, m);
     }
 
-    private static String[][] processMatrix(ArrayList<String> ctx, int columns) {
+    private static List<List<String>> processMatrix(ArrayList<String> ctx, int columns) {
         String[][] array = new String[ctx.size()][columns];
         for (var i = 0; i < array.length; i++) {
             array[i] = ctx.get(i).split("\\s+");
@@ -42,22 +42,7 @@ public final class MatrixParser {
         for (var i = 0; i < array.length; i++) {
             for (var j = 0; j < array[0].length; j++) {
                 if (array[i][j].equals("1")) {
-                    array[i][j] = "c" + String.valueOf(j);
-                }
-            }
-        }
-        return array;
-    }
-
-    private static List<List<String>> processMatrix2(ArrayList<String> ctx, int columns) {
-        String[][] array = new String[ctx.size()][columns];
-        for (var i = 0; i < array.length; i++) {
-            array[i] = ctx.get(i).split("\\s+");
-        }
-        for (var i = 0; i < array.length; i++) {
-            for (var j = 0; j < array[0].length; j++) {
-                if (array[i][j].equals("1")) {
-                    array[i][j] = "c" + String.valueOf(j);
+                    array[i][j] = "c" + j;
                 }
             }
         }
