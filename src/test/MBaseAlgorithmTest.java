@@ -12,17 +12,9 @@ public class MBaseAlgorithmTest {
     @Test
     void testMBaseAlgorithm() {
         var mbase = new MBase();
-        String[][] arr = {
-                {"c0", "c1", "c2", "0", "0", "0"},
-                {"0", "c1", "c2", "c3", "0", "c5"},
-                {"0", "c1", "c2", "0", "0", "0"},
-                {"c0", "0", "c2", "0", "0", "c5"},
-                {"c0", "c1", "c2", "c3", "0", "0"},
-                {"0", "c1", "c2", "c3", "0", "c5"},
-                {"0", "0", "c2", "c3", "0", "0"}
-        };
+        String[][] arr = {{"c0", "c1", "c2", "0", "0", "0"}, {"0", "c1", "c2", "c3", "0", "c5"}, {"0", "c1", "c2", "0", "0", "0"}, {"c0", "0", "c2", "0", "0", "c5"}, {"c0", "c1", "c2", "c3", "0", "0"}, {"0", "c1", "c2", "c3", "0", "c5"}, {"0", "0", "c2", "c3", "0", "0"}};
 
-        var output = mbase.mbase(arr);
+        var output = mbase.mbase(arr, "test", 8L);
 
         var myArrayList = new ArrayList<String[]>();
 
@@ -41,9 +33,19 @@ public class MBaseAlgorithmTest {
         var preElaboration = new MatrixPreElaboration();
         var mbase = new MBase();
         var row1 = new ArrayList<String>();
-        row1.add("0");row1.add("0");row1.add("c2");row1.add("c3");row1.add("0");row1.add("0");
+        row1.add("0");
+        row1.add("0");
+        row1.add("c2");
+        row1.add("c3");
+        row1.add("0");
+        row1.add("0");
         var row2 = new ArrayList<String>();
-        row2.add("0");row2.add("c1");row2.add("0");row2.add("c3");row2.add("0");row2.add("c5");
+        row2.add("0");
+        row2.add("c1");
+        row2.add("0");
+        row2.add("c3");
+        row2.add("0");
+        row2.add("c5");
 
         var matrix = new ArrayList<List<String>>();
         matrix.add(row1);
@@ -52,7 +54,7 @@ public class MBaseAlgorithmTest {
         //we should be careful to not input an immutable list
         var res = preElaboration.convertFromListToArray(preElaboration.removeColumns(preElaboration.removeRows(matrix)));
 
-        var output = mbase.mbase(res);
+        var output = mbase.mbase(res, "test", 8L);
 
         var myArrayList = new ArrayList<String[]>();
 
@@ -69,12 +71,9 @@ public class MBaseAlgorithmTest {
     @Test
     void testMBaseAlgorithmMat1() {
         var mbase = new MBase();
-        String[][] arr = {
-                {"0", "0", "c2", "c3", "0", "0"},
-                {"0", "c1", "0", "c3", "0", "c5"}
-        };
+        String[][] arr = {{"0", "0", "c2", "c3", "0", "0"}, {"0", "c1", "0", "c3", "0", "c5"}};
 
-        var output = mbase.mbase(arr);
+        var output = mbase.mbase(arr, "test", 8L);
 
         var myArrayList = new ArrayList<String[]>();
 
@@ -91,13 +90,9 @@ public class MBaseAlgorithmTest {
     @Test
     void testMBaseAlgorithmMat2() {
         var mbase = new MBase();
-        String[][] arr = {
-                {"0", "c1", "c2", "0"},
-                {"c0", "c1", "c2", "c3"},
-                {"c0", "0", "c2", "c3"}
-        };
+        String[][] arr = {{"0", "c1", "c2", "0"}, {"c0", "c1", "c2", "c3"}, {"c0", "0", "c2", "c3"}};
 
-        var output = mbase.mbase(arr);
+        var output = mbase.mbase(arr, "test", 8L);
 
         var myArrayList = new ArrayList<String[]>();
 

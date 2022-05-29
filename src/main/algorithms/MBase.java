@@ -1,51 +1,68 @@
 package algorithms;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class MBase {
-    public ArrayList<ArrayList<String>> mbase(String[][] matrix) {
+    public ArrayList<ArrayList<String>> mbase(String[][] matrix, String fileName, Long timeOut) {
+        var executor = Executors.newSingleThreadExecutor();
         var output = new ArrayList<String[]>();
         var queueSingoletti = new LinkedList<String[]>();
         var lambda = new String[matrix.length];
         var queue = new LinkedList<String[]>();
 
-        // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
-        //add comment
-        for (var j = 0; j < matrix[0].length; j++) {
-            for (var i = 0; i < matrix.length; i++) {
-                lambda[i] = matrix[i][j];
-            }
-            var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
-            var lambdaArray = lambdaArrayList.toArray(new String[0]);
-            if (checkSingleton(lambdaArray).equals("ok")) {
-                // ok ma non ultimo aggiunge alla coda
-                if (j != matrix[0].length - 1) {
-                    queue.add(lambdaArray);
-                }
-            } else if (checkSingleton(lambdaArray).equals("mhs")) {
-                output.add(lambdaArray);
-            }
-            queueSingoletti.add(lambdaArray);
-        }
+        var future = executor.submit(() -> {
 
-        while (queue.peek() != null) {
-            var vector = queue.peek();
-            var max = getMaxVectorProjection(vector);
-            for (var j = max; j < queueSingoletti.size(); j++) {
-                var e = queueSingoletti.get(j);
-                var sigma = calculateVectorUnion(vector, e);
-                var maxSigma = getMaxVectorProjection(sigma);
-                if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
-                    queue.add(sigma);
-                } else if (checkUnion(sigma, vector, e).equals("mhs")) {
-                    output.add(sigma);
+            // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
+            //add comment
+            for (var j = 0; j < matrix[0].length; j++) {
+                for (var i = 0; i < matrix.length; i++) {
+                    lambda[i] = matrix[i][j];
                 }
+                var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
+                var lambdaArray = lambdaArrayList.toArray(new String[0]);
+                if (checkSingleton(lambdaArray).equals("ok")) {
+                    // ok ma non ultimo aggiunge alla coda
+                    if (j != matrix[0].length - 1) {
+                        queue.add(lambdaArray);
+                    }
+                } else if (checkSingleton(lambdaArray).equals("mhs")) {
+                    output.add(lambdaArray);
+                }
+                queueSingoletti.add(lambdaArray);
             }
-            queue.poll();
+
+            while (queue.peek() != null) {
+                var vector = queue.peek();
+                var max = getMaxVectorProjection(vector);
+                for (var j = max; j < queueSingoletti.size(); j++) {
+                    var e = queueSingoletti.get(j);
+                    var sigma = calculateVectorUnion(vector, e);
+                    var maxSigma = getMaxVectorProjection(sigma);
+                    if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
+                        queue.add(sigma);
+                    } else if (checkUnion(sigma, vector, e).equals("mhs")) {
+                        output.add(sigma);
+                    }
+                }
+                queue.poll();
+            }
+
+
+        });
+
+        executor.shutdown();
+        try {
+            future.get(timeOut, TimeUnit.SECONDS);
+        } catch (ExecutionException | InterruptedException | TimeoutException e) {
+            System.out.println("Timeout expired for " + fileName);
+            return getMhsDomain(output);
         }
 
         return getMhsDomain(output);
-
     }
 
     private String[] calculateVectorUnion(String[] vectorA, String[] vectorB) {
@@ -73,13 +90,10 @@ public class MBase {
 
     private String checkSingleton(String[] sigma) {
         var targetSet = new HashSet<>(Arrays.asList(sigma));
-        if (!targetSet.contains("0"))
-            return "mhs";
+        if (!targetSet.contains("0")) return "mhs";
             // check if contains all zeroes
-        else if (targetSet.contains("0") && targetSet.size() <= 1)
-            return "ko";
-        else
-            return "ok";
+        else if (targetSet.contains("0") && targetSet.size() <= 1) return "ko";
+        else return "ok";
     }
 
     private String checkUnion(String[] sigma, String[] vector, String[] e) {
