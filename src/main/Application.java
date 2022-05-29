@@ -58,7 +58,7 @@ public class Application {
                 (end1 - start1));
         System.out.printf("La memoria usata è: %d KB \n", memoryUsed1 / 1024);
         System.out.printf("Numero MHS trovati %d: \n", res3.size());
-        res.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
+        res3.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
 
     }
 }
