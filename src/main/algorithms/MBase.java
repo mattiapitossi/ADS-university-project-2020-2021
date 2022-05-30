@@ -66,6 +66,13 @@ public class MBase {
         return getMhsDomain(output);
     }
 
+    /**
+     * Since the matrix could have different index from what its elements contains we have
+     * to check the actual index by iterating the list
+     * @param maxSigmaStr
+     * @param queueSingoletti
+     * @return
+     */
     private int getMaxSigmaFromSingoletti(String maxSigmaStr, LinkedList<String[]> queueSingoletti) {
         var i = 0;
         for (i = 0; i < queueSingoletti.size(); i++) {
