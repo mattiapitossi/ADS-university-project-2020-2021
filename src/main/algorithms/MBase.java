@@ -30,8 +30,9 @@ public class MBase {
 
         while (queue.peek() != null) {
             var vector = queue.peek();
-            var max = getMaxVectorProjection(vector);
-            for (var j = max; j < queueSingoletti.size(); j++) {
+            //var max = getMaxVectorProjection(vector);
+            var max = getVectorColumn(vector, queueSingoletti);
+            for (var j = max + 1; j < queueSingoletti.size(); j++) {
                 var e = queueSingoletti.get(j);
                 var sigma = calculateVectorUnion(vector, e);
                 var maxSigma = getMaxVectorProjection(sigma);
@@ -46,6 +47,10 @@ public class MBase {
 
         return getMhsDomain(output);
 
+    }
+
+    private int getVectorColumn(String[] vector, LinkedList<String[]> queueSingoletti) {
+        return queueSingoletti.indexOf(vector);
     }
 
     private String[] calculateVectorUnion(String[] vectorA, String[] vectorB) {
