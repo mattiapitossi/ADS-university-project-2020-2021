@@ -41,7 +41,9 @@ public class MBase {
                 for (var j = max + 1; j < queueSingoletti.size(); j++) {
                     var e = queueSingoletti.get(j);
                     var sigma = calculateVectorUnion(vector, e);
-                    var maxSigma = getMaxVectorProjection(sigma);
+                    var maxSigmaIndex = getMaxVectorProjection(sigma);
+                    var maxSigmaStr = "c" + maxSigmaIndex;
+                    var maxSigma = getMaxSigmaFromSingoletti(maxSigmaStr, queueSingoletti);
                     if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
                         queue.add(sigma);
                     } else if (checkUnion(sigma, vector, e).equals("mhs")) {
@@ -50,7 +52,7 @@ public class MBase {
                 }
                 queue.poll();
             }
-            
+
         });
 
         executor.shutdown();
@@ -63,6 +65,18 @@ public class MBase {
 
         return getMhsDomain(output);
     }
+
+    private int getMaxSigmaFromSingoletti(String maxSigmaStr, LinkedList<String[]> queueSingoletti) {
+        var i = 0;
+        for (i = 0; i < queueSingoletti.size(); i++) {
+            var res = queueSingoletti.get(i);
+            if (Arrays.asList(res).contains(maxSigmaStr)) {
+                break;
+            }
+        }
+        return i;
+    }
+
 
     private int getVectorColumn(String[] vector, LinkedList<String[]> queueSingoletti) {
         return queueSingoletti.indexOf(vector);
