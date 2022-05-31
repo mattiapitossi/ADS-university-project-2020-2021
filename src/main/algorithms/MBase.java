@@ -8,60 +8,52 @@ import java.util.concurrent.TimeoutException;
 
 public class MBase {
     public ArrayList<ArrayList<String>> mbase(String[][] matrix, String fileName, Long timeOut) {
-        var executor = Executors.newSingleThreadExecutor();
         var output = new ArrayList<String[]>();
         var queueSingoletti = new LinkedList<String[]>();
         var lambda = new String[matrix.length];
         var queue = new LinkedList<String[]>();
 
-        var future = executor.submit(() -> {
 
-            // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
-            //add comment
-            for (var j = 0; j < matrix[0].length; j++) {
-                for (var i = 0; i < matrix.length; i++) {
-                    lambda[i] = matrix[i][j];
-                }
-                var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
-                var lambdaArray = lambdaArrayList.toArray(new String[0]);
-                if (checkSingleton(lambdaArray).equals("ok")) {
-                    // ok ma non ultimo aggiunge alla coda
-                    if (j != matrix[0].length - 1) {
-                        queue.add(lambdaArray);
-                    }
-                } else if (checkSingleton(lambdaArray).equals("mhs")) {
-                    output.add(lambdaArray);
-                }
-                queueSingoletti.add(lambdaArray);
+        // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
+        //add comment
+        for (var j = 0; j < matrix[0].length; j++) {
+            for (var i = 0; i < matrix.length; i++) {
+                lambda[i] = matrix[i][j];
             }
-
-            while (queue.peek() != null) {
-                var vector = queue.peek();
-                var max = getVectorColumn(vector, queueSingoletti);
-                for (var j = max + 1; j < queueSingoletti.size(); j++) {
-                    var e = queueSingoletti.get(j);
-                    var sigma = calculateVectorUnion(vector, e);
-                    var maxSigmaIndex = getMaxVectorProjection(sigma);
-                    var maxSigmaStr = "c" + maxSigmaIndex;
-                    var maxSigma = getMaxSigmaFromSingoletti(maxSigmaStr, queueSingoletti);
-                    if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
-                        queue.add(sigma);
-                    } else if (checkUnion(sigma, vector, e).equals("mhs")) {
-                        output.add(sigma);
-                    }
+            var lambdaArrayList = new ArrayList<>(Arrays.asList(lambda).subList(0, matrix.length));
+            var lambdaArray = lambdaArrayList.toArray(new String[0]);
+            if (checkSingleton(lambdaArray).equals("ok")) {
+                // ok ma non ultimo aggiunge alla coda
+                if (j != matrix[0].length - 1) {
+                    queue.add(lambdaArray);
                 }
-                queue.poll();
+            } else if (checkSingleton(lambdaArray).equals("mhs")) {
+                output.add(lambdaArray);
             }
-
-        });
-
-        executor.shutdown();
-        try {
-            future.get(timeOut, TimeUnit.SECONDS);
-        } catch (ExecutionException | InterruptedException | TimeoutException e) {
-            System.out.println("Timeout expired for " + fileName);
-            return getMhsDomain(output);
+            queueSingoletti.add(lambdaArray);
         }
+
+        long start = System.currentTimeMillis();
+        long end = start + timeOut * 1000;
+
+        while (queue.peek() != null && System.currentTimeMillis() < end) {
+            var vector = queue.peek();
+            var max = getVectorColumn(vector, queueSingoletti);
+            for (var j = max + 1; j < queueSingoletti.size(); j++) {
+                var e = queueSingoletti.get(j);
+                var sigma = calculateVectorUnion(vector, e);
+                var maxSigmaIndex = getMaxVectorProjection(sigma);
+                var maxSigmaStr = "c" + maxSigmaIndex;
+                var maxSigma = getMaxSigmaFromSingoletti(maxSigmaStr, queueSingoletti);
+                if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
+                    queue.add(sigma);
+                } else if (checkUnion(sigma, vector, e).equals("mhs")) {
+                    output.add(sigma);
+                }
+            }
+            queue.poll();
+        }
+
 
         return getMhsDomain(output);
     }
@@ -69,6 +61,7 @@ public class MBase {
     /**
      * Since the matrix could have different index from what its elements contains we have
      * to check the actual index by iterating the list
+     *
      * @param maxSigmaStr
      * @param queueSingoletti
      * @return
