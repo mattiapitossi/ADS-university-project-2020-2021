@@ -1,7 +1,7 @@
 # Documentazione Progetto
 
 - [Parsing](#Parsing)
- - [Parser](##Parser)
+  - [Parser](##Parser)
 
 
 # Parsing
