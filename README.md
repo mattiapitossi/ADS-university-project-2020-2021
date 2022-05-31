@@ -14,8 +14,6 @@ I file da caricare e parsare sono di tipo .matrix e sono definiti come segue:
 
 ## Parser
 
----
-
 In Java esistono diversi modi per leggere un file:
 
 [](https://www.baeldung.com/reading-file-in-java)
@@ -23,8 +21,6 @@ In Java esistono diversi modi per leggere un file:
 In particolare, l’obiettivo di questa funzionalità è quello di leggere determinati file di tipo .matrix  contenuti nella cartella di cui verrà indicato il relativo percorso in input all’avvio del programma (fino a quando l’utente lo desidera), analizzarlo e creare un oggetto Java manipolabile.
 
 ## Proposta di Design
-
----
 
 Una volta letto il file .matrix, il compito è quello di individuare la dimensione e il valore delle i-esime righe e j-esime colonne eliminando dati superflui quali i commenti e i separatori delle righe della matrice.
 
@@ -55,8 +51,6 @@ public class MatrixResource {
 In Java non è possibile impostare dinamicamente una matrice bidimensionale, infatti visto la natura dei file non ci è data alcuna informazione riguardo la dimensione, sia delle righe che delle colonne, della matrice. Tuttavia, una possibile seconda soluzione potrebbe consistere nell’individuare la dimensione della matrice e parsare ogni singolo valore della matrice; spostandosi poi nella riga successiva qualsiasi volta si incontri il simbolo `-`.
 
 ## Validità dei files
-
----
 
 Le cartelle benchmark 1 e 2 contengono numerosi file che hanno il compito di testare i vari algoritmi implementati. In particolare, l’utente inserisce un percorso di una delle due cartelle e il programma dovrà individuare quali file saranno utili al fine dei test di benchmark. È noto che i file contenuti in queste cartelle non sono tutti della stessa dimensione e sono presenti anche dei cloni. Vi è dunque la possibilità di aggiungere un controllo che verifichi se il file è simile ad un altro già caricato e un controllo sulla dimensione del file, possibilmente con un limite preimpostato o dato in input dall’utente.
 
