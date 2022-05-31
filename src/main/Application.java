@@ -15,6 +15,9 @@ public class Application {
         System.out.println("Insert the path of the folder that contains .matrix files or a single .matrix file: ");
         var path = scanner.nextLine();
 
+        System.out.println("Insert the maximum time of elaboration (in seconds): ");
+        var time = scanner.nextLong();
+
         var dir = new File(path);
 
         if (!dir.isDirectory()) {
@@ -28,7 +31,7 @@ public class Application {
             // Risultati senza pre-elaborazione
             var runtime1 = Runtime.getRuntime();
             var start1 = System.currentTimeMillis();
-            var res3 = mbase.mbase(preElab.convertFromListToArray(matrix), dir.getName(), 60L);
+            var res3 = mbase.mbase(preElab.convertFromListToArray(matrix), dir.getName(), time);
             var end1 = System.currentTimeMillis();
             var memoryUsed1 = runtime1.totalMemory() - runtime1.freeMemory();
 
@@ -37,7 +40,7 @@ public class Application {
             // Risultati con pre-elaborazione
             var runtime = Runtime.getRuntime();
             var start = System.currentTimeMillis();
-            var res = mbase.mbase(res1, dir.getName(), 60L);
+            var res = mbase.mbase(res1, dir.getName(), time);
             var end = System.currentTimeMillis();
             var memoryUsed = runtime.totalMemory() - runtime.freeMemory();
 
@@ -70,7 +73,7 @@ public class Application {
                     // Risultati senza pre-elaborazione
                     var runtime1 = Runtime.getRuntime();
                     var start1 = System.currentTimeMillis();
-                    var res3 = mbase.mbase(preElab.convertFromListToArray(matrix), file.getName(), 8L);
+                    var res3 = mbase.mbase(preElab.convertFromListToArray(matrix), file.getName(), time);
                     var end1 = System.currentTimeMillis();
                     var memoryUsed1 = runtime1.totalMemory() - runtime1.freeMemory();
 
@@ -79,7 +82,7 @@ public class Application {
                     // Risultati con pre-elaborazione
                     var runtime = Runtime.getRuntime();
                     var start = System.currentTimeMillis();
-                    var res = mbase.mbase(res1, file.getName(), 8L);
+                    var res = mbase.mbase(res1, file.getName(), time);
                     var end = System.currentTimeMillis();
                     var memoryUsed = runtime.totalMemory() - runtime.freeMemory();
 
