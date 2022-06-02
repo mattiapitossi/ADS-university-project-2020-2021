@@ -4,8 +4,7 @@ import utils.MatrixPreElaboration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
     public static void main(String[] args) throws FileNotFoundException {
@@ -51,7 +50,11 @@ public class Application {
                     (end - start));
             System.out.printf("La memoria usata è: %d KB \n", memoryUsed / 1024);
             System.out.printf("Numero MHS trovati %d: \n", res.size());
-            res.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
+            var cardinalitaMin = res.stream().min(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+            var cardinalitaMax = res.stream().max(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+            System.out.printf("Cardinalita' minima dei mhs: %d\n", cardinalitaMin);
+            System.out.printf("Cardinalita' massima dei mhs: %d\n", cardinalitaMax);
+            res.forEach(mhs -> System.out.println(List.of(mhs)));
 
 
             System.out.println("------ MBASE SENZA PRE-ELABORAZIONE------");
@@ -60,7 +63,11 @@ public class Application {
                     (end1 - start1));
             System.out.printf("La memoria usata è: %d KB \n", memoryUsed1 / 1024);
             System.out.printf("Numero MHS trovati %d: \n", res3.size());
-            res3.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
+            var cardinalitaMinNoPre = res3.stream().min(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+            var cardinalitaMaxNoPre = res3.stream().max(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+            System.out.printf("Cardinalita' minima dei mhs: %d\n", cardinalitaMinNoPre);
+            System.out.printf("Cardinalita' massima dei mhs: %d\n", cardinalitaMaxNoPre);
+            res3.forEach(mhs -> System.out.println(List.of(mhs)));
         } else {
             for (var file : dir.listFiles()) {
                 if (file.isFile() && file.toString().endsWith(".matrix")) {
@@ -93,7 +100,11 @@ public class Application {
                             (end - start));
                     System.out.printf("La memoria usata è: %d KB \n", memoryUsed / 1024);
                     System.out.printf("Numero MHS trovati %d: \n", res.size());
-                    res.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
+                    var cardinalitaMin = res.stream().min(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+                    var cardinalitaMax = res.stream().max(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+                    System.out.printf("Cardinalita' minima dei mhs: %d\n", cardinalitaMin);
+                    System.out.printf("Cardinalita' massima dei mhs: %d\n", cardinalitaMax);
+                    res.forEach(mhs -> System.out.println(List.of(mhs)));
 
 
                     System.out.println("------ MBASE SENZA PRE-ELABORAZIONE------");
@@ -102,7 +113,11 @@ public class Application {
                             (end1 - start1));
                     System.out.printf("La memoria usata è: %d KB \n", memoryUsed1 / 1024);
                     System.out.printf("Numero MHS trovati %d: \n", res3.size());
-                    res3.forEach(mhs -> System.out.println(Arrays.asList(mhs)));
+                    var cardinalitaMinNoPre = res3.stream().min(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+                    var cardinalitaMaxNoPre = res3.stream().max(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
+                    System.out.printf("Cardinalita' minima dei mhs: \n", cardinalitaMinNoPre);
+                    System.out.printf("Cardinalita' massima dei mhs: \n", cardinalitaMaxNoPre);
+                    res3.forEach(mhs -> System.out.println(List.of(mhs)));
                 }
             }
         }
