@@ -1,21 +1,18 @@
 package algorithms;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class MBase {
     public ArrayList<ArrayList<String>> mbase(String[][] matrix, String fileName, Long timeOut) {
         var output = new ArrayList<String[]>();
-        var queueSingoletti = new LinkedList<String[]>();
+        var queueSingoletti = new HashMap<Integer, String[]>();
         var lambda = new String[matrix.length];
         var queue = new LinkedList<String[]>();
 
 
         // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
         //add comment
+        var k = 0;
         for (var j = 0; j < matrix[0].length; j++) {
             for (var i = 0; i < matrix.length; i++) {
                 lambda[i] = matrix[i][j];
@@ -30,7 +27,9 @@ public class MBase {
             } else if (checkSingleton(lambdaArray).equals("mhs")) {
                 output.add(lambdaArray);
             }
-            queueSingoletti.add(lambdaArray);
+            //se non si tratta di un mhs lo metto nella lista dei candidati
+            queueSingoletti.put(k, lambdaArray);
+            k++;
         }
 
         long start = System.currentTimeMillis();
@@ -68,7 +67,7 @@ public class MBase {
      * @param queueSingoletti
      * @return
      */
-    private int getMaxSigmaFromSingoletti(String maxSigmaStr, LinkedList<String[]> queueSingoletti) {
+    private int getMaxSigmaFromSingoletti(String maxSigmaStr, HashMap<Integer, String[]> queueSingoletti) {
         var i = 0;
         for (i = 0; i < queueSingoletti.size(); i++) {
             var res = queueSingoletti.get(i);
