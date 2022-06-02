@@ -29,6 +29,7 @@ public class Application {
 
             // Risultati senza pre-elaborazione
             var runtime1 = Runtime.getRuntime();
+            runtime1.gc();
             var start1 = System.currentTimeMillis();
             var res3 = mbase.mbase(preElab.convertFromListToArray(matrix), dir.getName(), time);
             var end1 = System.currentTimeMillis();
@@ -38,6 +39,7 @@ public class Application {
 
             // Risultati con pre-elaborazione
             var runtime = Runtime.getRuntime();
+            runtime.gc();
             var start = System.currentTimeMillis();
             var res = mbase.mbase(res1, dir.getName(), time);
             var end = System.currentTimeMillis();
@@ -79,6 +81,7 @@ public class Application {
 
                     // Risultati senza pre-elaborazione
                     var runtime1 = Runtime.getRuntime();
+                    runtime1.gc();
                     var start1 = System.currentTimeMillis();
                     var res3 = mbase.mbase(preElab.convertFromListToArray(matrix), file.getName(), time);
                     var end1 = System.currentTimeMillis();
@@ -88,6 +91,7 @@ public class Application {
 
                     // Risultati con pre-elaborazione
                     var runtime = Runtime.getRuntime();
+                    runtime.gc();
                     var start = System.currentTimeMillis();
                     var res = mbase.mbase(res1, file.getName(), time);
                     var end = System.currentTimeMillis();
