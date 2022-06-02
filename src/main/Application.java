@@ -53,11 +53,11 @@ public class Application {
         System.out.printf("Le dimensioni dell'istanza in ingresso sono: %d x %d \n\n", res1.length, res1[0].length);
         System.out.printf("I tempi di esecuzione dell'algoritmo MBase per questa istanza sono: %d millisecondi \n",
                 (end - start));
-        System.out.printf("Numero MHS trovati %d: \n", res.size());
         var cardinalitaMin = res.stream().min(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
         var cardinalitaMax = res.stream().max(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
         System.out.printf("Cardinalita' minima dei mhs: %d\n", cardinalitaMin);
         System.out.printf("Cardinalita' massima dei mhs: %d\n", cardinalitaMax);
+        System.out.printf("Numero MHS trovati %d: \n", res.size());
         res.forEach(mhs -> System.out.println(List.of(mhs)));
 
 
@@ -65,11 +65,11 @@ public class Application {
         System.out.printf("Le dimensioni dell'istanza in ingresso sono: %d x %d \n\n", size, size2);
         System.out.printf("I tempi di esecuzione dell'algoritmo MBase per questa istanza sono: %d millisecondi \n",
                 (end1 - start1));
-        System.out.printf("Numero MHS trovati %d: \n", res3.size());
         var cardinalitaMinNoPre = res3.stream().min(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
         var cardinalitaMaxNoPre = res3.stream().max(Comparator.comparingInt(ArrayList::size)).orElseThrow().size();
         System.out.printf("Cardinalita' minima dei mhs: %d\n", cardinalitaMinNoPre);
         System.out.printf("Cardinalita' massima dei mhs: %d\n", cardinalitaMaxNoPre);
+        System.out.printf("Numero MHS trovati %d: \n", res3.size());
         res3.forEach(mhs -> System.out.println(List.of(mhs)));
     }
 }
