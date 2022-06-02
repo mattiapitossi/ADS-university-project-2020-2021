@@ -84,11 +84,11 @@ public class MBaseAlgorithmTest {
 
         var output = mbase.mbase(arr, "test", 8L);
 
-        var myArrayList = new ArrayList<String[]>();
+        var myArrayList = new ArrayList<List<String>>();
 
-        var mhs0 = new String[]{"c3", "c3"};
-        var mhs1 = new String[]{"c2", "c1"};
-        var mhs2 = new String[]{"c2", "c5"};
+        var mhs0 = new ArrayList<>(List.of("c3"));
+        var mhs1 = new ArrayList<>(List.of("c1", "c2"));
+        var mhs2 = new ArrayList<>(List.of("c2", "c5"));
         myArrayList.add(mhs0);
         myArrayList.add(mhs1);
         myArrayList.add(mhs2);
@@ -107,11 +107,11 @@ public class MBaseAlgorithmTest {
 
         var output = mbase.mbase(arr, "test", 8L);
 
-        var myArrayList = new ArrayList<String[]>();
+        var myArrayList = new ArrayList<List<String>>();
 
-        var mhs0 = new String[]{"c2", "c2", "c2"};
-        var mhs1 = new String[]{"c1", "x", "c0"};
-        var mhs2 = new String[]{"c1", "x", "c3"};
+        var mhs0 = new ArrayList<>(List.of("c2"));
+        var mhs1 = new ArrayList<>(List.of("c0", "c1"));
+        var mhs2 = new ArrayList<>(List.of("c1", "c3"));
         myArrayList.add(mhs0);
         myArrayList.add(mhs1);
         myArrayList.add(mhs2);
