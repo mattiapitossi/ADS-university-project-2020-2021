@@ -38,7 +38,9 @@ public class MBase {
 
         while (queue.peek() != null && System.currentTimeMillis() < end) {
             var vector = queue.peek();
-            var max = getVectorColumn(vector, queueSingoletti);
+            var maxVectorIndex = getMaxVectorProjection(vector);
+            var maxVectorStr = "c" + maxVectorIndex;
+            var max = getMaxSigmaFromSingoletti(maxVectorStr, queueSingoletti);
             for (var j = max + 1; j < queueSingoletti.size(); j++) {
                 var e = queueSingoletti.get(j);
                 var sigma = calculateVectorUnion(vector, e);
@@ -157,6 +159,7 @@ public class MBase {
                 }
             }
         }
+        mhs.forEach(inner -> inner.sort(String::compareTo));
         return mhs;
     }
 
