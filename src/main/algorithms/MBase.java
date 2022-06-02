@@ -79,11 +79,6 @@ public class MBase {
         return i;
     }
 
-
-    private int getVectorColumn(String[] vector, LinkedList<String[]> queueSingoletti) {
-        return queueSingoletti.indexOf(vector);
-    }
-
     private String[] calculateVectorUnion(String[] vectorA, String[] vectorB) {
 
         var sigmaLength = vectorA.length;
