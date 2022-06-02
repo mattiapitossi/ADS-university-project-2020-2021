@@ -1,9 +1,6 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class MatrixPreElaboration {
 
@@ -11,9 +8,13 @@ public class MatrixPreElaboration {
         var found = new ArrayList<List<String>>();
         for (var i = 0; i < array.size() - 1; i++) {
             for (var j = i + 1; j < array.size(); j++) {
-                if (array.get(i).containsAll(array.get(j).stream().filter(c -> !c.equals("0")).toList()) && !found.contains(array.get(i))) {
+                if (new HashSet<>(array.get(i)).containsAll(array.get(j)
+                        .stream().filter(c -> !c.equals("0"))
+                        .toList()) && !found.contains(array.get(i))) {
                     found.add(array.get(i));
-                } else if (array.get(j).containsAll(array.get(i).stream().filter(c -> !c.equals("0")).toList()) && !found.contains(array.get(j))) {
+                } else if (new HashSet<>(array.get(j)).containsAll(array.get(i)
+                        .stream().filter(c -> !c.equals("0"))
+                        .toList()) && !found.contains(array.get(j))) {
                     found.add(array.get(j));
                 }
             }
@@ -22,7 +23,6 @@ public class MatrixPreElaboration {
         return array;
     }
 
-    //implement remove columns
     public List<List<String>> removeColumns(List<List<String>> array) {
         //for each column
         var indexToRemove = new ArrayList<Integer>();
