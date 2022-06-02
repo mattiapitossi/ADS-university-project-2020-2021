@@ -25,9 +25,10 @@ public class MBase {
             } else if (checkSingleton(lambdaArray).equals("mhs")) {
                 output.add(lambdaArray);
             }
-
-            queueSingoletti.put(k, lambdaArray);
-            k++;
+            if (!output.contains(lambdaArray)) {
+                queueSingoletti.put(k, lambdaArray);
+                k++;
+            }
         }
 
         long start = System.currentTimeMillis();
@@ -37,13 +38,13 @@ public class MBase {
             var vector = queue.peek();
             var maxVectorIndex = getMaxVectorProjection(vector);
             var maxVectorStr = "c" + maxVectorIndex;
-            var max = getMaxSigmaFromSingoletti(maxVectorStr, queueSingoletti);
+            var max = getMaxValueFromSingoletti(maxVectorStr, queueSingoletti);
             for (var j = max + 1; j < queueSingoletti.size(); j++) {
                 var e = queueSingoletti.get(j);
                 var sigma = calculateVectorUnion(vector, e);
                 var maxSigmaIndex = getMaxVectorProjection(sigma);
                 var maxSigmaStr = "c" + maxSigmaIndex;
-                var maxSigma = getMaxSigmaFromSingoletti(maxSigmaStr, queueSingoletti);
+                var maxSigma = getMaxValueFromSingoletti(maxSigmaStr, queueSingoletti);
                 if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
                     queue.add(sigma);
                 } else if (checkUnion(sigma, vector, e).equals("mhs")) {
@@ -65,7 +66,7 @@ public class MBase {
      * @param queueSingoletti
      * @return
      */
-    private int getMaxSigmaFromSingoletti(String maxSigmaStr, HashMap<Integer, String[]> queueSingoletti) {
+    private int getMaxValueFromSingoletti(String maxSigmaStr, HashMap<Integer, String[]> queueSingoletti) {
         var i = 0;
         for (i = 0; i < queueSingoletti.size(); i++) {
             var res = queueSingoletti.get(i);
@@ -81,8 +82,6 @@ public class MBase {
         var sigmaLength = vectorA.length;
         var sigma = new String[sigmaLength];
 
-        // considerando i tre vettori A, B e sigma della stessa dimensione sigmaLength
-        // (fare un controllo?)
         for (int i = 0; i < sigmaLength; i++) {
             if (Objects.equals(vectorA[i], "0") && Objects.equals(vectorB[i], "0")) {
                 sigma[i] = "0";
@@ -96,7 +95,6 @@ public class MBase {
         }
 
         return sigma;
-
     }
 
     private String checkSingleton(String[] sigma) {
