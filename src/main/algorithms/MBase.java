@@ -9,9 +9,7 @@ public class MBase {
         var lambda = new String[matrix.length];
         var queue = new LinkedList<String[]>();
 
-
         // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
-        //add comment
         var k = 0;
         for (var j = 0; j < matrix[0].length; j++) {
             for (var i = 0; i < matrix.length; i++) {
@@ -27,7 +25,7 @@ public class MBase {
             } else if (checkSingleton(lambdaArray).equals("mhs")) {
                 output.add(lambdaArray);
             }
-            //se non si tratta di un mhs lo metto nella lista dei candidati
+
             queueSingoletti.put(k, lambdaArray);
             k++;
         }
