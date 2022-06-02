@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ public final class MatrixParser {
     private MatrixParser() {
     }
 
-    public static List<List<String>> parse(String path) throws FileNotFoundException {
-        var sc = new Scanner(new BufferedReader(new FileReader(path)));
+    public static List<List<String>> parse(File file) throws FileNotFoundException {
+        var sc = new Scanner(new BufferedReader(new FileReader(file)));
         var rowsCtx = new ArrayList<String>();
         var m = 0;
 

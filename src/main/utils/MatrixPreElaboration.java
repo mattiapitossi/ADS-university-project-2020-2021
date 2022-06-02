@@ -7,15 +7,6 @@ import java.util.List;
 
 public class MatrixPreElaboration {
 
-
-    public ArrayList<List<String>> convert2DarrayToList(String[][] rows) {
-        var res = new ArrayList<List<String>>();
-        for (String[] row : rows) {
-            res.add(Arrays.asList(row));
-        }
-        return res;
-    }
-
     public List<List<String>> removeRows(List<List<String>> array) {
         var found = new ArrayList<List<String>>();
         for (var i = 0; i < array.size() - 1; i++) {

@@ -1,13 +1,18 @@
 package algorithms;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class MBase {
-    public ArrayList<ArrayList<String>> mbase(String[][] matrix) {
+    public ArrayList<ArrayList<String>> mbase(String[][] matrix, String fileName, Long timeOut) {
         var output = new ArrayList<String[]>();
         var queueSingoletti = new LinkedList<String[]>();
         var lambda = new String[matrix.length];
         var queue = new LinkedList<String[]>();
+
 
         // arrayOfColumns (la coda) contiene tutti i singoletti iniziali
         //add comment
@@ -28,14 +33,20 @@ public class MBase {
             queueSingoletti.add(lambdaArray);
         }
 
-        while (queue.peek() != null) {
+        long start = System.currentTimeMillis();
+        long end = start + timeOut * 1000;
+
+        while (queue.peek() != null && System.currentTimeMillis() < end) {
             var vector = queue.peek();
-            //var max = getMaxVectorProjection(vector);
-            var max = getVectorColumn(vector, queueSingoletti);
+            var maxVectorIndex = getMaxVectorProjection(vector);
+            var maxVectorStr = "c" + maxVectorIndex;
+            var max = getMaxSigmaFromSingoletti(maxVectorStr, queueSingoletti);
             for (var j = max + 1; j < queueSingoletti.size(); j++) {
                 var e = queueSingoletti.get(j);
                 var sigma = calculateVectorUnion(vector, e);
-                var maxSigma = getMaxVectorProjection(sigma);
+                var maxSigmaIndex = getMaxVectorProjection(sigma);
+                var maxSigmaStr = "c" + maxSigmaIndex;
+                var maxSigma = getMaxSigmaFromSingoletti(maxSigmaStr, queueSingoletti);
                 if (checkUnion(sigma, vector, e).equals("ok") && maxSigma != matrix[0].length - 1) {
                     queue.add(sigma);
                 } else if (checkUnion(sigma, vector, e).equals("mhs")) {
@@ -45,9 +56,29 @@ public class MBase {
             queue.poll();
         }
 
-        return getMhsDomain(output);
 
+        return getMhsDomain(output);
     }
+
+    /**
+     * Since the matrix could have different index from what its elements contains we have
+     * to check the actual index by iterating the list
+     *
+     * @param maxSigmaStr
+     * @param queueSingoletti
+     * @return
+     */
+    private int getMaxSigmaFromSingoletti(String maxSigmaStr, LinkedList<String[]> queueSingoletti) {
+        var i = 0;
+        for (i = 0; i < queueSingoletti.size(); i++) {
+            var res = queueSingoletti.get(i);
+            if (Arrays.asList(res).contains(maxSigmaStr)) {
+                break;
+            }
+        }
+        return i;
+    }
+
 
     private int getVectorColumn(String[] vector, LinkedList<String[]> queueSingoletti) {
         return queueSingoletti.indexOf(vector);
@@ -78,13 +109,10 @@ public class MBase {
 
     private String checkSingleton(String[] sigma) {
         var targetSet = new HashSet<>(Arrays.asList(sigma));
-        if (!targetSet.contains("0"))
-            return "mhs";
+        if (!targetSet.contains("0")) return "mhs";
             // check if contains all zeroes
-        else if (targetSet.contains("0") && targetSet.size() <= 1)
-            return "ko";
-        else
-            return "ok";
+        else if (targetSet.contains("0") && targetSet.size() <= 1) return "ko";
+        else return "ok";
     }
 
     private String checkUnion(String[] sigma, String[] vector, String[] e) {
@@ -131,6 +159,7 @@ public class MBase {
                 }
             }
         }
+        mhs.forEach(inner -> inner.sort(String::compareTo));
         return mhs;
     }
 
