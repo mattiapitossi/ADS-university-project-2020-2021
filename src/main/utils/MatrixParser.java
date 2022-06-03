@@ -29,9 +29,6 @@ public final class MatrixParser {
             }
         }
 
-        // DEBUG:
-        // rowsCtx.stream().forEach(c -> System.out.println(c));
-
         return processMatrix(rowsCtx, m);
     }
 
