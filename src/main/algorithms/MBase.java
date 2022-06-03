@@ -25,7 +25,7 @@ public class MBase {
             } else if (checkSingleton(lambdaArray).equals("mhs")) {
                 output.add(lambdaArray);
             }
-            if (!output.contains(lambdaArray)) {
+            if (!output.contains(lambdaArray) && !Arrays.stream(lambdaArray).allMatch(e -> e.equals("0"))) {
                 queueSingoletti.put(k, lambdaArray);
                 k++;
             }
